@@ -103,7 +103,7 @@ CRITICAL: Output ONLY a valid JSON object matching these exact keys:
     "intervention": "[Intervention / Modalities Provided]",
     "evaluation": "[Re-evaluation After Treatment]",
     "review": "[Review Plan / Follow-up Date]",
-    "attending therapist": "[Physiotherapist Name]"
+    "attending_therapist": "[Physiotherapist Name]"
 }
 """
 
