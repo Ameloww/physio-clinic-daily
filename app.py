@@ -102,7 +102,8 @@ CRITICAL: Output ONLY a valid JSON object matching these exact keys:
     "others": "[Other Special Tests / Findings]",
     "intervention": "[Intervention / Modalities Provided]",
     "evaluation": "[Re-evaluation After Treatment]",
-    "review": "[Review Plan / Follow-up Date]"
+    "review": "[Review Plan / Follow-up Date]",
+    "attending therapist": "[Physiotherapist Name]"
 }
 """
 
@@ -121,7 +122,7 @@ if case_type == "🆕 New Case (Full Assessment)":
 else:
     with st.expander("💡 **Voice Checklist: FOLLOW-UP SESSION**", expanded=True):
         st.markdown("""
-        * **1. Basic Info:** Patient Name, Date
+        * **1. Basic Info:** Patient Name, Date, Attending Therapist Name
         * **2. Status Today:** Complaint, Pain Scale (1-10)
         * **3. Objective Exam:** Observation/Palpation, ROM, MMT, Others
         * **4. Progress & Plan:** Intervention Given, Evaluation, Review Plan
@@ -173,7 +174,6 @@ if audio_input:
                     raw_text = response.text
                     clean_json = re.sub(r'```json|```', '', raw_text).strip()
                     
-                    # Store data into Session State to allow editing
                     st.session_state.extracted_data = json.loads(clean_json)
                     st.session_state.active_case_type = case_type
                     st.toast("🎉 AI Processing Complete! Scroll down to review & edit.")
@@ -265,7 +265,14 @@ if st.session_state.extracted_data is not None:
             edited_data["others"] = st.text_area("Others / Special Tests", data.get("others", ""), height=70)
             edited_data["evaluation"] = st.text_area("Post-Treatment Evaluation", data.get("evaluation", ""), height=70)
         
-        edited_data["review"] = st.text_input("Review Plan / Next Follow-up", data.get("review", ""))
+        col3, col4 = st.columns(2)
+        with col3:
+            edited_data["review"] = st.text_input("Review Plan / Next Follow-up", data.get("review", ""))
+        with col4:
+            edited_data["attending therapist"] = st.text_input(
+                "Attending Therapist", 
+                data.get("attending therapist", data.get("attending_therapist", ""))
+            )
 
         template_file = "template_followup.docx"
         out_filename = f"FollowUp_{edited_data['name'].replace(' ', '_')}.docx"
