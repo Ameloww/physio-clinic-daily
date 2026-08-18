@@ -125,7 +125,7 @@ else:
         * **1. Basic Info:** Patient Name, Date, Attending Therapist Name
         * **2. Status Today:** Complaint, Pain Scale (1-10)
         * **3. Objective Exam:** Observation/Palpation, ROM, MMT, Others
-        * **4. Progress & Plan:** Intervention Given, Evaluation, Review Plan
+        * **4. Progress & Plan:** Intervention Given, Evaluation, Review Plan, Attending Therapist
         """)
 
 audio_input = st.audio_input("Tap microphone to start recording:")
@@ -269,9 +269,9 @@ if st.session_state.extracted_data is not None:
         with col3:
             edited_data["review"] = st.text_input("Review Plan / Next Follow-up", data.get("review", ""))
         with col4:
-            edited_data["attending therapist"] = st.text_input(
+            edited_data["attending_therapist"] = st.text_input(
                 "Attending Therapist", 
-                data.get("attending therapist", data.get("attending_therapist", ""))
+                data.get("attending_therapist", data.get("attending_therapist", ""))
             )
 
         template_file = "template_followup.docx"
