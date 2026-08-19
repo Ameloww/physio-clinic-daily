@@ -103,7 +103,7 @@ CRITICAL: Output ONLY a valid JSON object matching these exact keys:
     "intervention": "[Intervention / Modalities Provided]",
     "evaluation": "[Re-evaluation After Treatment]",
     "review": "[Review Plan / Follow-up Date]",
-    "attending_therapist": "[Physiotherapist Name]"
+    "therapist": "[Physiotherapist Name]"
 }
 """
 
@@ -269,9 +269,9 @@ if st.session_state.extracted_data is not None:
         with col3:
             edited_data["review"] = st.text_input("Review Plan / Next Follow-up", data.get("review", ""))
         with col4:
-            edited_data["attending_therapist"] = st.text_input(
+            edited_data["therapist"] = st.text_input(
                 "Attending Therapist", 
-                data.get("attending_therapist", data.get("attending_therapist", ""))
+                data.get("therapist", data.get("attending_therapist", ""))
             )
 
         template_file = "template_followup.docx"
